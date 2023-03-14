@@ -6,8 +6,8 @@ def frechet_mean(x):
     mu = x[0]
     loss_over_iterations = []
     epsilon = 1.
-    while epsilon > 1e-12
-        assert len(iterations) < 1000
+    while epsilon > 1e-12:
+        assert len(loss_over_iterations) < 1000
         delta_mu = sum(riemannian_log(mu, xi) for xi in x) / len(x)
         new_mu = riemannian_exp(mu, delta_mu)
         epsilon = dist_squared(mu, new_mu) ** .5        
