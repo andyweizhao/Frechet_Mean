@@ -34,7 +34,7 @@ def dist_squared(P, Q):
 
 
 def random_spd_matrix(n, max_eigenvalue=1):
-    D = np.diag(np.random.rand(n) * max_eigenvalue + 1e-5)
+    D = np.diag(np.random.rand(n) * max_eigenvalue)
     M = scipy.stats.ortho_group.rvs(dim=n)
     return M @ D @ M.transpose()
 
