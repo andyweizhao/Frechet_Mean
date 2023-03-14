@@ -25,8 +25,8 @@ def riemannian_exp(P, Q):
 
 
 def dist_squared(P, Q):
-    #print(np.linalg.eigh(np.linalg.inv(P) @ Q)[0])
-    return (np.log(np.linalg.eigh(np.linalg.inv(P) @ Q)[0]) ** 2).sum()
+    sqrt_P_inv = scipy.linalg.sqrtm(np.linalg.inv(P))
+    return (np.log(np.linalg.eigh(sqrt_P_inv @ Q @ sqrt_P_inv)[0]) ** 2).sum()
 
 
 def random_spd_matrix(n, max_eigenvalue=1):
