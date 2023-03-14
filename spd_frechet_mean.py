@@ -1,15 +1,19 @@
+
 import numpy as np
 import scipy
 
-
 def frechet_mean(x):
     mu = x[0]
+    loss_over_iterations = []
     for _ in range(10):
         delta_mu = sum(riemannian_log(mu, xi) for xi in x) / len(x)
         new_mu = riemannian_exp(mu, delta_mu)
         print(((mu - new_mu) ** 2).sum(), sum(dist_squared(xi, mu) for xi in x))
-        mu = new_mu
-    return mu
+        
+        loss_over_iterations.append(sum(dist_squared(xi, mu) for xi in x))
+        
+        mu = new_mu        
+    return mu, loss_over_iterations
 
 
 def riemannian_log(P, Q):
@@ -35,7 +39,16 @@ def random_spd_matrix(n, max_eigenvalue=1):
     return M @ D @ M.transpose()
 
 
-n = 20
-t = 8
+n = 8 # dimension size
+t = 100 # number of points
 x = [random_spd_matrix(n) for _ in range(t)]
-frechet_mean(x)
+mu, loss_over_iterations = frechet_mean(x)
+
+
+import matplotlib.pyplot as plt
+fig, ax = plt.subplots()
+
+color='tab:blue'
+ax.plot(loss_over_iterations, linestyle='-', color=color)
+ax.set_xlabel('Iterations'); ax.set_ylabel('$\sum_i d(x, x_i)^2$');
+ax.set_title(f'SPD_{n}, num_points = {t}')
