@@ -5,13 +5,13 @@ import scipy
 def frechet_mean(x):
     mu = x[0]
     loss_over_iterations = []
-    for _ in range(10):
+    epsilon = 1.
+    while epsilon > 1e-12
+        assert len(iterations) < 1000
         delta_mu = sum(riemannian_log(mu, xi) for xi in x) / len(x)
         new_mu = riemannian_exp(mu, delta_mu)
-        print(((mu - new_mu) ** 2).sum(), sum(dist_squared(xi, mu) for xi in x))
-        
-        loss_over_iterations.append(sum(dist_squared(xi, mu) for xi in x))
-        
+        epsilon = dist_squared(mu, new_mu) ** .5        
+        loss_over_iterations.append(sum(dist_squared(xi, mu) for xi in x))    
         mu = new_mu        
     return mu, loss_over_iterations
 
