@@ -53,6 +53,8 @@ def riemannian_norm(x, v):
 
 def fr_mean_forward(x, w, max_iter=150, atol=1e-10, verbose=False):
     """
+    The implementation is based on algorithm 3 in https://www.math.fsu.edu/~whuang2/pdf/KarcherMeanSPD_techrep.pdf .
+    
     Args
     ----
     x (tensor) [..., points, dim]    (usually it will be either [points, dim] or [batch_size, points, dim])
