@@ -45,17 +45,18 @@ def demo():
     number_of_points = 4
     dim = 4
 
-    z = torch.matrix_exp(
-        forward.to_matrix(torch.normal(mean=0., std=1., size=(number_of_points, dim * (dim + 1) // 2))))
-    z = forward.to_coordinates(z).clone().detach().requires_grad_(True)
+    for i in range(100):
+        z = torch.matrix_exp(
+            forward.to_matrix(torch.normal(mean=0., std=1., size=(number_of_points, dim * (dim + 1) // 2))))
+        z = forward.to_coordinates(z).clone().detach().requires_grad_(True)
 
-    print(torch.linalg.eigh(forward.to_matrix(z))[0])  # visualisation of eigenvalues
+        #print(torch.linalg.eigh(forward.to_matrix(z))[0])  # visualisation of eigenvalues
 
-    edge_index = torch.tensor([[0, 0, 0, 0, 1, 1, 2, 2, 3],
-                               [0, 1, 2, 3, 1, 3, 2, 3, 3]])
-    w = torch.ones(edge_index.size(1))
+        edge_index = torch.tensor([[0, 0, 0, 0, 1, 1, 2, 2, 3],
+                                   [0, 1, 2, 3, 1, 3, 2, 3, 3]])
 
-    out = frechet_agg(z, edge_index, w)
+        w = torch.ones(edge_index.size(1))
+
+        out = frechet_agg(z, edge_index, w)
 
 
-#demo()

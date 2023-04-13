@@ -7,7 +7,7 @@ class FrechetMean(torch.autograd.Function):
 
     @staticmethod
     def forward(ctx, x, w):
-        mean = forward.fr_mean_forward(x, w, atol=1e-6)
+        mean = forward.fr_mean_forward(x, w)
         ctx.save_for_backward(x, mean, w)
         return mean
 
