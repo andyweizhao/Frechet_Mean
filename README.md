@@ -9,7 +9,7 @@ error is simply ignored when it occurs.
 
 in ECML/layers/gcn replace 
 
-`       symmat_feats = SPDManifold.logmap_id(mat_feats)
+        symmat_feats = SPDManifold.logmap_id(mat_feats)
 
         symmat_feats = symmat_feats.reshape(num_nodes, -1)
 
