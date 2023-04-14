@@ -39,13 +39,16 @@ def frechet_agg(x, edge_index, edge_weight):
     return fr_mean.fr_mean(batched_tensor, w=weight_tensor)
 
 
+
+
+
 def demo():
     # Very simple graph with random node features to show aggregation.
 
-    number_of_points = 4
+    number_of_points = 5
     dim = 4
 
-    for i in range(100):
+    for i in range(1):
         z = torch.matrix_exp(
             forward.to_matrix(torch.normal(mean=0., std=1., size=(number_of_points, dim * (dim + 1) // 2))))
         z = forward.to_coordinates(z).clone().detach().requires_grad_(True)
@@ -55,8 +58,27 @@ def demo():
         edge_index = torch.tensor([[0, 0, 0, 0, 1, 1, 2, 2, 3],
                                    [0, 1, 2, 3, 1, 3, 2, 3, 3]])
 
-        w = torch.ones(edge_index.size(1))
+        # w = torch.ones(edge_index.size(1))
 
-        out = frechet_agg(z, edge_index, w)
+        # out = frechet_agg(z, edge_index, w)
 
+        mean = fr_mean.fr_mean(z)
+
+        epsilon = 5e-3
+
+        direction = torch.zeros(number_of_points, dim * (dim + 1) // 2)
+        direction[0, 1] = 1.
+
+        jacobian_column = z.grad
+
+        jac = torch.autograd.functional.jacobian(fr_mean.fr_mean, z)
+
+        mean_eps = fr_mean.fr_mean(z + epsilon * direction)
+
+        jacobian_column_numerical = (mean_eps - mean) / epsilon
+
+        print(jacobian_column_numerical)
+        print(jac[:,0,1])
+
+demo()
 
